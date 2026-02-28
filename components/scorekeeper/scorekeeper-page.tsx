@@ -22,7 +22,7 @@ export function ScorekeeperPage() {
 
   function showErrorToast(code: PlayerError['code']) {
     const message = getErrorMessage({ error: { code } })
-    if (message) addToast(message)
+    if (message) addToast(message, 'error')
   }
 
   function handleAddPlayer(args: HandleAddPlayerArgs) {

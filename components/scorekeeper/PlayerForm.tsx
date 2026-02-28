@@ -19,16 +19,16 @@ export function PlayerForm({
 }: PlayerFormProps) {
   return (
     <header className="w-full pb-6">
-      <h1 className="mb-4 text-3xl font-light italic text-foreground">
+      <h1 id="player-form-heading" className="mb-4 text-3xl font-light italic text-foreground">
         Score<span className="font-bold text-primary">Keeper</span>
       </h1>
-      <form className="flex gap-3" onSubmit={onSubmit}>
+      <form className="flex gap-3" onSubmit={onSubmit} aria-labelledby="player-form-heading">
         <Input
           ref={inputRef}
           value={playerName}
           onChange={(event) => onPlayerNameChange(event.target.value)}
           placeholder="Enter player name"
-          aria-label="New player name"
+          aria-labelledby="player-form-heading"
         />
         <Button type="submit" size="default" variant="positive" aria-label="Add player">
           <UserRoundPlus size={28} />

@@ -41,7 +41,12 @@ export function PlayerListRow({
         >
           <CircleMinus size={20} />
         </Button>
-        <span className="w-10 text-center text-2xl text-foreground">
+        <span
+          className="w-10 text-center text-2xl text-foreground"
+          aria-live="polite"
+          aria-atomic="true"
+          aria-label={`${player.name}'s score`}
+        >
           {player.score}
         </span>
         <Button

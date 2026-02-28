@@ -24,7 +24,7 @@ describe('ScorekeeperPage (integration)', () => {
   it('adds a player when name is entered and form is submitted', async () => {
     const user = userEvent.setup()
     renderWithToaster()
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Alice')
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     expect(screen.getByText('Alice')).toBeInTheDocument()
@@ -42,7 +42,7 @@ describe('ScorekeeperPage (integration)', () => {
   it('shows toast when adding duplicate player name (case-insensitive)', async () => {
     const user = userEvent.setup()
     renderWithToaster()
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Bob')
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     await user.type(input, 'bob')
@@ -53,7 +53,7 @@ describe('ScorekeeperPage (integration)', () => {
   it('increments score when add point is clicked', async () => {
     const user = userEvent.setup()
     renderWithToaster()
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Charlie')
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     await user.click(screen.getByRole('button', { name: /Add point to Charlie/i }))
@@ -64,7 +64,7 @@ describe('ScorekeeperPage (integration)', () => {
   it('decrements score when subtract point is clicked', async () => {
     const user = userEvent.setup()
     renderWithToaster()
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Dana')
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     await user.click(screen.getByRole('button', { name: /Add point to Dana/i }))
@@ -75,7 +75,7 @@ describe('ScorekeeperPage (integration)', () => {
   it('removes player when remove button is clicked', async () => {
     const user = userEvent.setup()
     renderWithToaster()
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Eve')
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     expect(screen.getByText('Eve')).toBeInTheDocument()
@@ -87,7 +87,7 @@ describe('ScorekeeperPage (integration)', () => {
   it('resets all scores to zero when Reset Scores is clicked', async () => {
     const user = userEvent.setup()
     renderWithToaster()
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Frank')
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     await user.click(screen.getByRole('button', { name: /Add point to Frank/i }))
@@ -101,7 +101,7 @@ describe('ScorekeeperPage (integration)', () => {
   it('clears all players when New Game is clicked', async () => {
     const user = userEvent.setup()
     renderWithToaster()
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Grace')
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     expect(screen.getByText('Grace')).toBeInTheDocument()
@@ -114,7 +114,7 @@ describe('ScorekeeperPage (integration)', () => {
   it('shows toast when Save Game is clicked', async () => {
     const user = userEvent.setup()
     renderWithToaster()
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Henry')
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     await user.click(screen.getByRole('button', { name: /Save Game/i }))

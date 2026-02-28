@@ -26,7 +26,7 @@ describe('PlayerForm', () => {
         onSubmit={() => {}}
       />
     )
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     expect(input).toHaveValue('Alice')
   })
 
@@ -40,7 +40,7 @@ describe('PlayerForm', () => {
         onSubmit={() => {}}
       />
     )
-    const input = screen.getByLabelText(/New player name/i)
+    const input = screen.getByPlaceholderText('Enter player name')
     await user.type(input, 'Bob')
     expect(onPlayerNameChange).toHaveBeenCalled()
   })
@@ -57,5 +57,18 @@ describe('PlayerForm', () => {
     )
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     expect(onSubmit).toHaveBeenCalledTimes(1)
+  })
+
+  it('associates input with heading via aria-labelledby', () => {
+    render(
+      <PlayerForm
+        playerName=""
+        onPlayerNameChange={() => {}}
+        onSubmit={() => {}}
+      />
+    )
+    const input = screen.getByPlaceholderText('Enter player name')
+    expect(input).toHaveAttribute('aria-labelledby', 'player-form-heading')
+    expect(document.getElementById('player-form-heading')).toBeInTheDocument()
   })
 })

@@ -1,16 +1,19 @@
 'use client'
 
 import * as React from 'react'
-import { ToastProvider, ToastViewport, Toast, ToastDescription } from '@/components/ui/toast'
+import { ToastProvider, ToastViewport, Toast, ToastDescription, type ToastVariant } from '@/components/ui/toast'
+
+export type { ToastVariant }
 
 export interface ToastMessage {
   id: string
   description: string
+  variant?: ToastVariant
 }
 
 const ToastContext = React.createContext<{
   toasts: ToastMessage[]
-  addToast: (description: string) => void
+  addToast: (description: string, variant?: ToastVariant) => void
 } | null>(null)
 
 export function useToast() {
@@ -22,9 +25,9 @@ export function useToast() {
 export function Toaster({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = React.useState<ToastMessage[]>([])
 
-  const addToast = React.useCallback((description: string) => {
+  const addToast = React.useCallback((description: string, variant: ToastVariant = 'default') => {
     const id = crypto.randomUUID()
-    setToasts((prev) => [...prev, { id, description }])
+    setToasts((prev) => [...prev, { id, description, variant }])
   }, [])
 
   const removeToast = React.useCallback((id: string) => {
@@ -38,6 +41,7 @@ export function Toaster({ children }: { children: React.ReactNode }) {
         {toasts.map((toast) => (
           <Toast
             key={toast.id}
+            variant={toast.variant ?? 'default'}
             onOpenChange={(open) => {
               if (!open) removeToast(toast.id)
             }}

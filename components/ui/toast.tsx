@@ -4,6 +4,8 @@ import * as React from 'react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import { cn } from '@/lib/cn'
 
+export type ToastVariant = 'error' | 'info' | 'default'
+
 const ToastProvider = ToastPrimitive.Provider
 
 const ToastViewport = React.forwardRef<
@@ -21,14 +23,28 @@ const ToastViewport = React.forwardRef<
 ))
 ToastViewport.displayName = ToastPrimitive.Viewport.displayName
 
+const toastVariants: Record<ToastVariant, string> = {
+  default:
+    'border-border bg-card text-card-foreground',
+  error:
+    'border-destructive bg-destructive/10 text-destructive [&_[data-slot=toast-description]]:text-destructive',
+  info:
+    'border-primary/50 bg-primary/5 text-foreground'
+}
+
+interface ToastProps extends React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root> {
+  variant?: ToastVariant
+}
+
 const Toast = React.forwardRef<
   React.ComponentRef<typeof ToastPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitive.Root>
->(({ className, ...props }, ref) => (
+  ToastProps
+>(({ className, variant = 'default', ...props }, ref) => (
   <ToastPrimitive.Root
     ref={ref}
     className={cn(
-      'group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-lg border border-border bg-card p-4 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-bottom-full data-[state=open]:slide-in-from-bottom-full',
+      'group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-lg border p-4 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-bottom-full data-[state=open]:slide-in-from-bottom-full',
+      toastVariants[variant],
       className
     )}
     {...props}
@@ -42,6 +58,7 @@ const ToastDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitive.Description
     ref={ref}
+    data-slot="toast-description"
     className={cn('text-sm text-card-foreground', className)}
     {...props}
   />

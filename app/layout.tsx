@@ -14,7 +14,8 @@ const poppins = Poppins({
 
 export const metadata = {
   title: 'ScoreKeeper',
-  description: 'A scorekeeping web application for tracking game scores.'
+  description: 'A scorekeeping web application for tracking game scores.',
+  robots: {index: false, follow: false}
 }
 
 export default function RootLayout(props: RootLayoutProps) {

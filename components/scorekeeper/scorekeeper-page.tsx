@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useRef, useState } from 'react'
 import { useToast } from '@/components/ui/toaster'
 import { PlayerForm } from './PlayerForm'
 import { PlayerList } from './PlayerList'
@@ -18,6 +17,7 @@ import { getErrorMessage } from '@/types/scorekeeper'
 export function ScorekeeperPage() {
   const [players, setPlayers] = useState<Player[]>([])
   const [playerName, setPlayerName] = useState('')
+  const addPlayerInputRef = useRef<HTMLInputElement>(null)
   const { addToast } = useToast()
 
   function showErrorToast(code: PlayerError['code']) {
@@ -108,6 +108,7 @@ export function ScorekeeperPage() {
   function handleNewGame() {
     setPlayers([])
     setPlayerName('')
+    requestAnimationFrame(() => addPlayerInputRef.current?.focus())
   }
 
   function handleSaveGame() {
@@ -130,6 +131,7 @@ export function ScorekeeperPage() {
         playerName={playerName}
         onPlayerNameChange={setPlayerName}
         onSubmit={handleSubmit}
+        inputRef={addPlayerInputRef}
       />
 
       <main className="flex-1">

@@ -8,12 +8,14 @@ interface PlayerFormProps {
   playerName: string
   onPlayerNameChange: (value: string) => void
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  inputRef?: React.RefObject<HTMLInputElement | null>
 }
 
 export function PlayerForm({
   playerName,
   onPlayerNameChange,
-  onSubmit
+  onSubmit,
+  inputRef
 }: PlayerFormProps) {
   return (
     <header className="w-full pb-6">
@@ -22,12 +24,13 @@ export function PlayerForm({
       </h1>
       <form className="flex gap-3" onSubmit={onSubmit}>
         <Input
+          ref={inputRef}
           value={playerName}
           onChange={(event) => onPlayerNameChange(event.target.value)}
           placeholder="Enter player name"
           aria-label="New player name"
         />
-        <Button type="submit" size="default" aria-label="Add player">
+        <Button type="submit" size="default" variant="positive" aria-label="Add player">
           <UserRoundPlus size={28} />
         </Button>
       </form>

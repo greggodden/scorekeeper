@@ -23,7 +23,7 @@ export function PlayerList({
       <h2 className="mb-4 text-2xl font-light italic text-foreground">Players</h2>
       <div className="space-y-4">
         {players.length === 0 ? (
-          <p className="text-muted-foreground">{emptyPlaceholder}</p>
+          <p className="text-center text-muted-foreground">{emptyPlaceholder}</p>
         ) : (
           players.map((player) => (
             <PlayerListRow

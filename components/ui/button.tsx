@@ -12,9 +12,9 @@ export const buttonVariants = cva(
       variant: {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
         ghost: 'bg-transparent border-transparent text-foreground hover:bg-accent hover:text-accent-foreground',
+        positive: 'bg-tertiary border-tertiary text-foreground hover:bg-tertiary/90 hover:text-tertiary-foreground',
+        positiveAlt: 'bg-transparent border-transparent text-foreground hover:bg-tertiary/90 hover:text-tertiary-foreground',
         outline: 'bg-transparent border-border text-foreground hover:bg-accent hover:text-accent-foreground',
-        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        gapped: 'gap-2'
       },
       size: {
         default: 'h-10 min-w-[2.5rem]',
@@ -38,7 +38,7 @@ export function Button(props: ButtonProps) {
 }
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'ghost' | 'outline' | 'gapped'
+  variant?: 'default' | 'ghost' | 'positive' | 'positiveAlt' | 'outline'
   size?: 'default' | 'icon'
   asChild?: boolean
 }

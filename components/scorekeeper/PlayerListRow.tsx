@@ -19,7 +19,7 @@ export function PlayerListRow({
 }: PlayerListRowProps) {
   return (
     <div className="flex flex-row items-center gap-4">
-      <div className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 shadow-sm">
+      <div className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-border bg-card pl-4 shadow-sm">
         <span className="min-w-0 flex-1 truncate text-base text-card-foreground">
           {player.name}
         </span>
@@ -45,7 +45,7 @@ export function PlayerListRow({
           {player.score}
         </span>
         <Button
-          variant="ghost"
+          variant="positiveAlt"
           size="default"
           aria-label={`Add point to ${player.name}`}
           onClick={() => onAddPoint(player.id)}

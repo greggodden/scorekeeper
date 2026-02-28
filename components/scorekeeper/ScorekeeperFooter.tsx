@@ -19,16 +19,16 @@ export function ScorekeeperFooter({
   return (
     <footer className="mt-8 border-border bg-background py-4">
       <div className="flex flex-wrap items-center justify-center gap-3 pb-2">
-        <Button onClick={onResetGame} disabled={!hasPlayers} variant="gapped">
-          <RotateCcw />
+        <Button onClick={onResetGame} disabled={!hasPlayers}>
+          <RotateCcw className="pr-2" size={28}/>
           Reset Scores
         </Button>
-        <Button onClick={onNewGame} variant="gapped">
-          <CirclePlay />
+        <Button onClick={onNewGame}>
+          <CirclePlay className="pr-2" size={28}/>
           New Game
         </Button>
-        <Button onClick={onSaveGame} disabled={!hasPlayers} variant="gapped">
-          <Save />
+        <Button onClick={onSaveGame} disabled={!hasPlayers}>
+          <Save className="pr-2" size={28}/>
           Save Game
         </Button>
       </div>

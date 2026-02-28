@@ -1,27 +1,25 @@
 # ScoreKeeper
 
-A scorekeeping web application for tracking game scores. Add players, adjust scores with +/- buttons, reset scores, or start a new game. Error messages and feedback are shown via toast notifications.
+A scorekeeping web application for tracking game scores. Add players by name, adjust scores with +/- buttons, reset scores, or start a new game.
 
-## Tech stack
+Built with Next.js, React, Tailwind CSS, and shadcn/ui.
 
-- **Next.js 16** (App Router)
-- **React 19**
-- **TypeScript**
-- **Tailwind CSS v4**
-- **Radix UI** (Toast, Slot, Visually Hidden)
-- **class-variance-authority** and **lucide-react** for UI
+## Getting started
 
-## Key components
+```bash
+npm install
+npm run dev
+```
 
-- **ScorekeeperPage** – Main page; composes the form, player list, and footer; holds state and handlers; shows errors via toast.
-- **PlayerForm** – Header with app title, player name input, and Add player button.
-- **PlayerList** – "Players" section; shows placeholder text when empty or a list of **PlayerListRow**.
-- **PlayerListRow** – Single player: name, remove button, minus/score/plus controls.
-- **ScorekeeperFooter** – Reset Scores, New Game, and Save Game buttons (Save is placeholder for future use) and copyright.
-- **Toaster** – Radix Toast provider and viewport; **useToast()** is used to show error toasts.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Shared types and the **ERROR_MESSAGES** map live in `types/scorekeeper.ts`.
+## Scripts
 
-## Built with
-
-This project was built using **Cursor Agent** (Cursor’s AI-assisted development). The implementation plan and refactors were guided by a deep analysis and a stepwise PLAN.md, with changes applied and tested incrementally.
+| Command       | Description              |
+|---------------|--------------------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production   |
+| `npm run start` | Start production server |
+| `npm run lint`  | Run ESLint              |
+| `npm run test`  | Run unit and integration tests (Jest) |
+| `npm run test:watch` | Run tests in watch mode |

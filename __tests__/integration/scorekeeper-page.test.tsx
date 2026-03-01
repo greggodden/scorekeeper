@@ -72,7 +72,20 @@ describe('ScorekeeperPage (integration)', () => {
     expect(screen.getByText('0')).toBeInTheDocument()
   })
 
-  it('removes player when remove button is clicked', async () => {
+  it('closing AlertDialog with Cancel keeps player when removing', async () => {
+    const user = userEvent.setup()
+    renderWithToaster()
+    const input = screen.getByPlaceholderText('Enter player name')
+    await user.type(input, 'Eve')
+    await user.click(screen.getByRole('button', { name: /Add player/i }))
+    await user.click(screen.getByRole('button', { name: /Remove Eve/i }))
+    expect(screen.getByRole('alertdialog')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /Cancel/i }))
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+    expect(screen.getByText('Eve')).toBeInTheDocument()
+  })
+
+  it('removes player when remove button is clicked and Confirm is chosen', async () => {
     const user = userEvent.setup()
     renderWithToaster()
     const input = screen.getByPlaceholderText('Enter player name')
@@ -80,11 +93,14 @@ describe('ScorekeeperPage (integration)', () => {
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     expect(screen.getByText('Eve')).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /Remove Eve/i }))
+    expect(screen.getByRole('alertdialog')).toBeInTheDocument()
+    expect(screen.getByText(/Remove player: Eve\?/)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /Confirm/i }))
     expect(screen.queryByText('Eve')).not.toBeInTheDocument()
     expect(screen.getByText('Add players to begin.')).toBeInTheDocument()
   })
 
-  it('resets all scores to zero when Reset Scores is clicked', async () => {
+  it('resets all scores to zero when Reset Scores is clicked and Confirm is chosen', async () => {
     const user = userEvent.setup()
     renderWithToaster()
     const input = screen.getByPlaceholderText('Enter player name')
@@ -94,11 +110,13 @@ describe('ScorekeeperPage (integration)', () => {
     await user.click(screen.getByRole('button', { name: /Add point to Frank/i }))
     expect(screen.getByText('2')).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /Reset Scores/i }))
+    expect(screen.getByRole('alertdialog')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /Confirm/i }))
     expect(screen.getByText('0')).toBeInTheDocument()
     expect(screen.getByText('Frank')).toBeInTheDocument()
   })
 
-  it('clears all players when New Game is clicked', async () => {
+  it('clears all players when New Game is clicked and Confirm is chosen', async () => {
     const user = userEvent.setup()
     renderWithToaster()
     const input = screen.getByPlaceholderText('Enter player name')
@@ -106,6 +124,8 @@ describe('ScorekeeperPage (integration)', () => {
     await user.click(screen.getByRole('button', { name: /Add player/i }))
     expect(screen.getByText('Grace')).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /New Game/i }))
+    expect(screen.getByRole('alertdialog')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /Confirm/i }))
     expect(screen.queryByText('Grace')).not.toBeInTheDocument()
     expect(screen.getByText('Add players to begin.')).toBeInTheDocument()
     expect(input).toHaveValue('')

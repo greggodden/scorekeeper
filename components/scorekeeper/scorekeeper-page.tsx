@@ -2,6 +2,17 @@
 
 import { useRef, useState } from 'react'
 import { useToast } from '@/components/ui/toaster'
+import type { ToastVariant } from '@/components/ui/toast'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog'
 import { PlayerForm } from './PlayerForm'
 import { PlayerList } from './PlayerList'
 import { ScorekeeperFooter } from './ScorekeeperFooter'
@@ -14,15 +25,36 @@ import type {
 } from '@/types/scorekeeper'
 import { getErrorMessage } from '@/types/scorekeeper'
 
+const ALERT_DEFAULT_TITLE = 'Are you sure?'
+const ALERT_DEFAULT_CANCEL = 'Cancel'
+const ALERT_DEFAULT_ACTION = 'Confirm'
+
+interface AlertState {
+  open: boolean
+  title: string
+  description: string
+  onConfirm: () => void
+  onCancel: () => void
+}
+
+const initialAlertState: AlertState = {
+  open: false,
+  title: ALERT_DEFAULT_TITLE,
+  description: '',
+  onConfirm: () => {},
+  onCancel: () => {}
+}
+
 export function ScorekeeperPage() {
   const [players, setPlayers] = useState<Player[]>([])
   const [playerName, setPlayerName] = useState('')
+  const [alertState, setAlertState] = useState<AlertState>(initialAlertState)
   const addPlayerInputRef = useRef<HTMLInputElement>(null)
   const { addToast } = useToast()
 
-  function showErrorToast(code: PlayerError['code']) {
+  function showErrorToast(code: PlayerError['code'], variant: ToastVariant = 'error') {
     const message = getErrorMessage({ error: { code } })
-    if (message) addToast(message, 'error')
+    if (message) addToast(message, variant)
   }
 
   function handleAddPlayer(args: HandleAddPlayerArgs) {
@@ -59,15 +91,23 @@ export function ScorekeeperPage() {
   }
 
   function handleRemovePlayer(args: HandleRemovePlayerArgs) {
-    const { id } = args
-    const nextPlayers = players.filter((player) => player.id !== id)
-
-    if (nextPlayers.length === players.length) {
-      showErrorToast('failedToRemovePlayer')
-      return
-    }
-
-    setPlayers(nextPlayers)
+    const { player } = args
+    setAlertState({
+      open: true,
+      title: ALERT_DEFAULT_TITLE,
+      description: `Remove player: ${player.name}?`,
+      onConfirm: () => {
+        setAlertState((s) => ({ ...s, open: false }))
+        const nextPlayers = players.filter((p) => p.id !== player.id)
+        if (nextPlayers.length === players.length) {
+          showErrorToast('failedToRemovePlayer')
+          return
+        }
+        setPlayers(nextPlayers)
+        addToast(getErrorMessage({ error: { code: 'successPlayerRemoved' } }), 'success')
+      },
+      onCancel: () => setAlertState((s) => ({ ...s, open: false }))
+    })
   }
 
   function handleAddPoint(args: HandleAdjustPointArgs) {
@@ -102,20 +142,42 @@ export function ScorekeeperPage() {
     if (!players.length) {
       return
     }
-    setPlayers((current) => current.map((player) => ({ ...player, score: 0 })))
+    setAlertState({
+      open: true,
+      title: ALERT_DEFAULT_TITLE,
+      description: 'Points for all players will be reset to 0.',
+      onConfirm: () => {
+        try {
+          setPlayers((current) => current.map((player) => ({ ...player, score: 0 })))
+        } catch {
+          showErrorToast('failedToResetGame')
+        }
+        setAlertState((s) => ({ ...s, open: false }))
+      },
+      onCancel: () => setAlertState((s) => ({ ...s, open: false }))
+    })
   }
 
   function handleNewGame() {
-    setPlayers([])
-    setPlayerName('')
-    requestAnimationFrame(() => addPlayerInputRef.current?.focus())
+    setAlertState({
+      open: true,
+      title: ALERT_DEFAULT_TITLE,
+      description: 'Starting a new game will remove all players and points.',
+      onConfirm: () => {
+        setPlayers([])
+        setPlayerName('')
+        setAlertState((s) => ({ ...s, open: false }))
+        requestAnimationFrame(() => addPlayerInputRef.current?.focus())
+      },
+      onCancel: () => setAlertState((s) => ({ ...s, open: false }))
+    })
   }
 
   function handleSaveGame() {
     if (!players.length) {
       return
     }
-    showErrorToast('saveGame')
+    showErrorToast('saveGame', 'info')
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -127,6 +189,19 @@ export function ScorekeeperPage() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-4 py-8">
+      <AlertDialog open={alertState.open} onOpenChange={(open) => !open && setAlertState((s) => ({ ...s, open: false }))}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{alertState.title}</AlertDialogTitle>
+            <AlertDialogDescription>{alertState.description}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onCancel={alertState.onCancel}>{ALERT_DEFAULT_CANCEL}</AlertDialogCancel>
+            <AlertDialogAction onConfirm={alertState.onConfirm}>{ALERT_DEFAULT_ACTION}</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <PlayerForm
         playerName={playerName}
         onPlayerNameChange={setPlayerName}
@@ -138,7 +213,7 @@ export function ScorekeeperPage() {
         <PlayerList
           players={players}
           emptyPlaceholder="Add players to begin."
-          onRemovePlayer={(id) => handleRemovePlayer({ id })}
+          onRemovePlayer={(player) => handleRemovePlayer({ player })}
           onAddPoint={(id) => handleAddPoint({ id })}
           onSubtractPoint={(id) => handleSubtractPoint({ id })}
         />

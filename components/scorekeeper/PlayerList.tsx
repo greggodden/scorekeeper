@@ -6,7 +6,7 @@ import type { Player } from '@/types/scorekeeper'
 interface PlayerListProps {
   players: Player[]
   emptyPlaceholder?: string
-  onRemovePlayer: (id: string) => void
+  onRemovePlayer: (player: Player) => void
   onAddPoint: (id: string) => void
   onSubtractPoint: (id: string) => void
 }

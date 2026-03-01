@@ -20,7 +20,7 @@ describe('PlayerListRow', () => {
     expect(screen.getByText('5')).toBeInTheDocument()
   })
 
-  it('calls onRemove with player id when remove is clicked', async () => {
+  it('calls onRemove with player when remove is clicked', async () => {
     const user = userEvent.setup()
     const onRemove = jest.fn()
     render(
@@ -32,7 +32,7 @@ describe('PlayerListRow', () => {
       />
     )
     await user.click(screen.getByRole('button', { name: /Remove Test Player/i }))
-    expect(onRemove).toHaveBeenCalledWith('p1')
+    expect(onRemove).toHaveBeenCalledWith(player)
   })
 
   it('calls onAddPoint with player id when add point is clicked', async () => {

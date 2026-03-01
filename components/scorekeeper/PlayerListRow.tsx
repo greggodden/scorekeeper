@@ -6,7 +6,7 @@ import type { Player } from '@/types/scorekeeper'
 
 interface PlayerListRowProps {
   player: Player
-  onRemove: (id: string) => void
+  onRemove: (player: Player) => void
   onAddPoint: (id: string) => void
   onSubtractPoint: (id: string) => void
 }
@@ -27,7 +27,7 @@ export function PlayerListRow({
           variant="ghost"
           size="default"
           aria-label={`Remove ${player.name}`}
-          onClick={() => onRemove(player.id)}
+          onClick={() => onRemove(player)}
         >
           <UserRoundMinus size={20} />
         </Button>

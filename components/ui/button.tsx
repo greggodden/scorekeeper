@@ -6,7 +6,7 @@ import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/cn'
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-lg border border-border bg-primary text-primary-foreground px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-lg border border-border bg-primary text-primary-foreground text-sm font-medium shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -14,7 +14,7 @@ export const buttonVariants = cva(
         ghost: 'bg-transparent border-transparent text-foreground hover:bg-accent hover:text-accent-foreground',
         positive: 'bg-tertiary border-tertiary text-foreground hover:bg-tertiary/90 hover:text-tertiary-foreground',
         positiveAlt: 'bg-transparent border-transparent text-foreground hover:bg-tertiary/90 hover:text-tertiary-foreground',
-        outline: 'bg-transparent border-border text-foreground hover:bg-accent hover:text-accent-foreground',
+        outline: 'bg-transparent border-border text-foreground hover:outline-none hover:ring-2',
       },
       size: {
         default: 'h-10 min-w-[2.5rem]',

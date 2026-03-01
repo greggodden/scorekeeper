@@ -14,7 +14,9 @@ export interface PlayerError {
     | 'failedToRemovePlayer'
     | 'failedToAddPoint'
     | 'failedToSubtractPoint'
+    | 'failedToResetGame'
     | 'saveGame'
+    | 'successPlayerRemoved'
 }
 
 export interface HandleAddPlayerArgs {
@@ -22,7 +24,7 @@ export interface HandleAddPlayerArgs {
 }
 
 export interface HandleRemovePlayerArgs {
-  id: string
+  player: Player
 }
 
 export interface HandleAdjustPointArgs {
@@ -42,7 +44,9 @@ export const ERROR_MESSAGES: Record<PlayerError['code'], string> = {
   failedToRemovePlayer: 'Failed to remove player. Please try again.',
   failedToAddPoint: 'Failed to add point. Please try again.',
   failedToSubtractPoint: 'Failed to remove point. Please try again.',
-  saveGame: 'This feature is still in development. Please try again later.'
+  failedToResetGame: 'Failed to reset game. Please try again.',
+  saveGame: 'This feature is still in development. Please try again later.',
+  successPlayerRemoved: 'Player removed successfully.'
 }
 
 export function getErrorMessage(args: GetErrorMessageArgs): string {

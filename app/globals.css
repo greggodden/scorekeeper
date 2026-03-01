@@ -40,6 +40,8 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-tertiary: var(--tertiary);
   --color-tertiary-foreground: var(--tertiary-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -64,6 +66,8 @@
   --secondary-foreground: oklch(0.9619 0.0580 95.6174);
   --tertiary: oklch(0.52 0.17 142);
   --tertiary-foreground: oklch(0.9619 0.0580 95.6174);
+  --info: oklch(45.2% 0.313 264.1);
+  --info-foreground: oklch(0.9619 0.0580 95.6174);
   --muted: oklch(0.2291 0.0060 56.0708);
   --muted-foreground: oklch(0.8687 0.0043 56.3660);
   --accent: oklch(0.5553 0.1455 48.9975);
@@ -105,4 +109,5 @@
   --shadow-lg: 1px 1px 16px -2px hsl(0 63% 18% / 0.12), 1px 4px 6px -3px hsl(0 63% 18% / 0.12);
   --shadow-xl: 1px 1px 16px -2px hsl(0 63% 18% / 0.12), 1px 8px 10px -3px hsl(0 63% 18% / 0.12);
   --shadow-2xl: 1px 1px 16px -2px hsl(0 63% 18% / 0.30);
+  --tw-duration: 1s;
 }

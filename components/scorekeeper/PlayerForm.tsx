@@ -19,7 +19,7 @@ export function PlayerForm({
 }: PlayerFormProps) {
   return (
     <header className="w-full pb-6">
-      <h1 id="player-form-heading" className="mb-4 text-3xl font-light italic text-foreground">
+      <h1 id="player-form-heading" className="mb-4 text-4xl font-light italic text-foreground">
         Score<span className="font-bold text-primary">Keeper</span>
       </h1>
       <form className="flex gap-3" onSubmit={onSubmit} aria-labelledby="player-form-heading">

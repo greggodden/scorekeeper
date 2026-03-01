@@ -42,6 +42,7 @@ export function Toaster({ children }: { children: React.ReactNode }) {
           <Toast
             key={toast.id}
             variant={toast.variant ?? 'default'}
+            onClose={() => removeToast(toast.id)}
             onOpenChange={(open) => {
               if (!open) removeToast(toast.id)
             }}

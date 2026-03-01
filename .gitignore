@@ -1,5 +1,32 @@
+# Dependencies and build
 node_modules
 .next
-docs
-.vscode
 .swc
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+
+# Vercel
+.vercel
+
+# OS and editor junk
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# IDE (optional: remove .vscode if you want to share project settings)
+.vscode
+.idea
+*.iml
+
+# Project-specific
+docs
